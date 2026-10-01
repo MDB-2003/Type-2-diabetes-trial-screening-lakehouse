@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: bronze
+    description: Immutable raw landing tables. Direct identifiers stay here.
+    database: HEALTHCARE_LAKEHOUSE
+    schema: BRONZE
+    tables:
+      - name: raw_patients
+        description: Synthea patients.csv. Every source column was loaded as text.
+      - name: raw_observations
+        description: Synthea observations.csv, including LOINC 4548-4 hemoglobin A1c.
+      - name: raw_conditions
+        description: Synthea conditions.csv, including SNOMED diabetes conditions.
+      - name: raw_medications
+        description: Synthea medications.csv.
+      - name: raw_trials
+        description: Recruiting diabetes trials. PAYLOAD is a JSON string.

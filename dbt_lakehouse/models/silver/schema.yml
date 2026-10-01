@@ -1,0 +1,88 @@
+version: 2
+
+models:
+  - name: stg_patients
+    description: Demographic attributes used for trial screening. Names, SSN, street address, and coordinates remain in Bronze.
+    columns:
+      - name: patient_id
+        tests:
+          - not_null
+          - unique
+      - name: birth_date
+        tests:
+          - not_null
+      - name: gender
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['M', 'F']
+
+  - name: stg_observations
+    description: Cast observation facts. Numeric values below zero are flagged, not dropped.
+    columns:
+      - name: patient_id
+        tests:
+          - not_null
+      - name: observation_code
+        tests:
+          - not_null
+
+  - name: stg_conditions
+    description: Cast condition facts. is_type2_diabetes is limited to SNOMED codes found in conditions.csv.
+    columns:
+      - name: patient_id
+        tests:
+          - not_null
+      - name: condition_code
+        tests:
+          - not_null
+
+  - name: stg_medications
+    description: Cast medication facts.
+    columns:
+      - name: patient_id
+        tests:
+          - not_null
+      - name: medication_code
+        tests:
+          - not_null
+
+  - name: stg_trials
+    description: Recruiting diabetes protocols with parsed age years and an HbA1c window taken only from inclusion text.
+    columns:
+      - name: nct_id
+        tests:
+          - not_null
+          - unique
+      - name: criteria_raw_text
+        tests:
+          - not_null
+
+  - name: int_patient_latest_hba1c
+    description: Latest plausible hemoglobin A1c (LOINC 4548-4, unit %).
+    columns:
+      - name: patient_id
+        tests:
+          - not_null
+          - unique
+      - name: latest_hba1c
+        tests:
+          - not_null
+
+  - name: int_patient_diabetes
+    description: One row per patient who has any condition, with a type 2 diabetes flag.
+    columns:
+      - name: patient_id
+        tests:
+          - not_null
+          - unique
+
+  - name: audit_implausible_observations
+    description: Numeric observation rows with a negative value. These stay out of the HbA1c screening input.
+    columns:
+      - name: patient_id
+        tests:
+          - not_null
+      - name: value_numeric
+        tests:
+          - not_null

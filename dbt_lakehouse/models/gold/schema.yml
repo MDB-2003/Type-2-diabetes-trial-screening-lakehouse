@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: fct_trial_patient_matches
+    description: >
+      One row per patient and recruiting diabetes trial. ELIGIBLE means the patient
+      is living, inside the protocol age window, has a type 2 diabetes condition,
+      and the latest HbA1c sits inside a window parsed from the inclusion text.
+      REVIEW_REQUIRED means age and diabetes history pass but the inclusion text
+      has no usable HbA1c window.
+    columns:
+      - name: nct_id
+        tests:
+          - not_null
+      - name: patient_id
+        tests:
+          - not_null
+      - name: match_status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['ELIGIBLE', 'INELIGIBLE', 'REVIEW_REQUIRED']
+      - name: passes_age_check
+        tests:
+          - not_null

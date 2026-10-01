@@ -1,0 +1,33 @@
+# Credentials & Secrets (CRITICAL)
+.env
+*.env
+credentials.json
+*.pem
+
+# Python Virtual Environments & Caches
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+
+# Data & Large Files (Keep Snowflake raw dumps out of Git)
+data/raw/
+*.csv
+*.parquet
+*.jsonl
+
+# dbt Artifacts
+dbt_packages/
+target/
+logs/
+.user.yml
+
+# Streamlit & OS System Files
+.streamlit/secrets.toml
+.DS_Store
+Thumbs.db
+
+# Local editor rules
+.cursorrules

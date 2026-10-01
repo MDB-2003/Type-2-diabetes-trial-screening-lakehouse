@@ -1,0 +1,7 @@
+dbt-snowflake==1.12.1
+snowflake-connector-python>=3.12
+pandas>=2.2
+python-dotenv>=1.0
+streamlit>=1.40
+google-genai>=1.0
+requests>=2.32
